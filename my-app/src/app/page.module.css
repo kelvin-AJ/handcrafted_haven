@@ -35,6 +35,12 @@
   list-style: none;
 
 }
+.navLinks li:hover{
+  background: var(--gray-alpha-200);
+  border-radius: 4px;
+  padding: 10px 20px;
+}
+
 .nav{
   width: 100%;
 }
@@ -102,9 +108,22 @@
   line-height: 28px;
   font-weight: 500;
   color: var(--foreground);
-  /* background: rgba(62, 62, 62, 0.9); */
   text-align: center;
   padding: 20px;
+}
+.sub{
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.article {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  line-height: 24px;
+  justify-content: space-around;
+  overflow: hidden;
 }
 
 a.primary {
@@ -126,6 +145,7 @@ a.secondary {
   background: var(--background);
   width: 100%;
   padding: 16px;
+  justify-content: center;
 }
 
 .footer a {

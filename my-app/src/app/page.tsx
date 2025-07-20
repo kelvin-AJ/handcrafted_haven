@@ -1,7 +1,7 @@
 
 import styles from "./page.module.css";
  import Link from "next/link";
-//  import Image from "next/image";
+ import Image from "next/image";
 
 export default function Home() {
   return (
@@ -41,14 +41,50 @@ export default function Home() {
         </div>
 
         <div className={styles.article}>
-            {/* <Image
+
+          {/* <h2 className="sub">Own One-of-a-Kind, Handcrafted Masterpieces</h2> */}
+            <Image
             aria-hidden
-            src="images/img.jpg"
+            src="/images/img.jpg"
             alt="File icon"
-            width={16}
-            height={16}
-          /> */}
+            width={170}
+            height={160}
+          />
+
+           <Image
+            aria-hidden
+            src="/images/img3.jpg"
+            alt="File icon"
+            width={170}
+            height={160}
+          />
+
+           <Image
+            aria-hidden
+            src="/images/img1.jpg"
+            alt="File icon"
+            width={170}
+            height={160}
+          />
+
+           <Image
+            aria-hidden
+            src="/images/img2.jpg"
+            alt="File icon"
+            width={170}
+            height={160}
+          />
           </div>
+          <p className={styles.sub}>
+            Discover the beauty of handcrafted items that tell a story. Each piece is unique, made with
+            care and attention to detail. From home decor to personal accessories, find something special
+            that resonates with you.
+              Our artisans pour their heart and soul into every creation, ensuring that you receive not just a product,
+            but a piece of art that carries the essence of craftsmanship. Join us in celebrating the art of handmade
+            and support local artisans.
+          </p>
+
+       
       </main>
 
       <footer className={styles.footer}>
