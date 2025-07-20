@@ -42,40 +42,51 @@ export default function Home() {
 
         <div className={styles.article}>
 
-          {/* <h2 className="sub">Own One-of-a-Kind, Handcrafted Masterpieces</h2> */}
+          <h2 className={styles.subh}>Own One-of-a-Kind, Handcrafted Masterpieces</h2>
             <Image
             aria-hidden
             src="/images/img.jpg"
             alt="File icon"
-            width={170}
-            height={160}
+            width={200}
+            height={180}
           />
 
            <Image
             aria-hidden
             src="/images/img3.jpg"
             alt="File icon"
-            width={170}
-            height={160}
+            width={200}
+            height={180}
           />
 
            <Image
             aria-hidden
             src="/images/img1.jpg"
             alt="File icon"
-            width={170}
-            height={160}
+            width={200}
+            height={180}
           />
 
            <Image
             aria-hidden
             src="/images/img2.jpg"
             alt="File icon"
-            width={170}
-            height={160}
+            width={200}
+            height={180}
           />
           </div>
-          <p className={styles.sub}>
+          <div className={styles.sub}>
+
+            <Image
+            aria-hidden
+            src="/images/img4.jpg"
+            alt="File icon"
+            width={300}
+            height={200}
+            />
+
+            <p className={styles.para}>
+
             Discover the beauty of handcrafted items that tell a story. Each piece is unique, made with
             care and attention to detail. From home decor to personal accessories, find something special
             that resonates with you.
@@ -83,6 +94,7 @@ export default function Home() {
             but a piece of art that carries the essence of craftsmanship. Join us in celebrating the art of handmade
             and support local artisans.
           </p>
+          </div>
 
        
       </main>
