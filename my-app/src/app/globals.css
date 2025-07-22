@@ -1,14 +1,38 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --licorice-rgb: 18, 3, 9;
+  --tyrian-purple-rgb: 112, 22, 60;
+  --cadet-gray-rgb: 149, 178, 184;
+  --white-rgb: 255, 255, 255;
+
+  --foreground: rgba(var(--licorice-rgb), 1);
+  --background: rgba(var(--white-rgb), 1);
+  --nav-background: rgba(var(--tyrian-purple-rgb), 1);
+  --accent-text-1: rgba(var(--cadet-gray-rgb), 1);
+  --accent-text-2: rgba(var(--white-rgb), 1);
+
+  --alpha-subtle: rgba(var(--licorice-rgb), 0.08);
+  --alpha-lighter: rgba(var(--licorice-rgb), 0.05);
+
+  --button-primary-hover: rgba(var(--licorice-rgb), 0.8);
+  --button-secondary-hover: rgba(var(--cadet-gray-rgb), 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: rgba(var(--white-rgb), 1);
+    --background: rgba(var(--licorice-rgb), 1);
+    --nav-background: rgba(var(--tyrian-purple-rgb), 1);
+    --accent-text-1: rgba(var(--cadet-gray-rgb), 1);
+    --accent-text-2: rgba(var(--licorice-rgb), 1);
+
+    --alpha-subtle: rgba(var(--white-rgb), 0.145);
+    --alpha-lighter: rgba(var(--white-rgb), 0.06);
+
+    --button-primary-hover: rgba(var(--white-rgb), 0.8);
+    --button-secondary-hover: rgba(var(--licorice-rgb), 0.8);
   }
 }
+
 
 html,
 body {

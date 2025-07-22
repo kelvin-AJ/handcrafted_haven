@@ -2,6 +2,7 @@
 import styles from "./page.module.css";
  import Link from "next/link";
  import Image from "next/image";
+ import ProductSample from "./ui/product-sample";
 
 export default function Home() {
   return (
@@ -43,37 +44,26 @@ export default function Home() {
         <div className={styles.article}>
 
           <h2 className={styles.subh}>Own One-of-a-Kind, Handcrafted Masterpieces</h2>
-            <Image
-            aria-hidden
-            src="/images/img.jpg"
-            alt="File icon"
-            width={200}
-            height={180}
-          />
-
-           <Image
-            aria-hidden
-            src="/images/img3.jpg"
-            alt="File icon"
-            width={200}
-            height={180}
-          />
-
-           <Image
-            aria-hidden
-            src="/images/img1.jpg"
-            alt="File icon"
-            width={200}
-            height={180}
-          />
-
-           <Image
-            aria-hidden
-            src="/images/img2.jpg"
-            alt="File icon"
-            width={200}
-            height={180}
-          />
+            <ProductSample 
+              itemName={"Native Woven Basket"}
+              itemPrice={"$200"}
+              imgSrc="/images/img.jpg"
+              />
+            <ProductSample 
+              itemName={"Vintage Game Board"}
+              itemPrice={"$20"}
+              imgSrc="/images/img1.jpg"
+              />
+            <ProductSample 
+              itemName={"Wall  Flowers"}
+              itemPrice={"$10"}
+              imgSrc="/images/img2.jpg"
+              />
+            <ProductSample 
+              itemName={"Fine China Dishes"}
+              itemPrice={"$520"}
+              imgSrc="/images/img3.jpg"
+              />
           </div>
           <div className={styles.sub}>
 
