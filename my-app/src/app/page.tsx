@@ -1,21 +1,17 @@
 
 import styles from "./page.module.css";
- import Link from "next/link";
+//  import Link from "next/link";
  import Image from "next/image";
  import ProductSample from "./ui/product-sample";
+import Navbar from "../app/ui/navbars";
+import Footer from "../app/ui/footer"
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      
-   <nav className={styles.nav}>
-    <ul className={styles.navLinks}>
-    <li><Link href="/">Home</Link></li>
-    <li><Link href="#about">About</Link></li>
-    <li><Link href="#products">Products</Link></li>
-    <li><Link href="#contact">Contact</Link></li>
-    </ul>
-   </nav>
+
+    <Navbar />
+
       <main className={styles.main}>
 
         <div className={styles.heroPage}>
@@ -72,7 +68,7 @@ export default function Home() {
             src="/images/img4.jpg"
             alt="File icon"
             width={300}
-            height={200}
+            height={300}
             />
 
             <p className={styles.para}>
@@ -89,9 +85,9 @@ export default function Home() {
        
       </main>
 
-      <footer className={styles.footer}>
-        <p>© {new Date().getFullYear()} Artisan Touch. All rights reserved.</p>
-      </footer>
+      <Footer />
+
+      
     </div>
   );
 }
