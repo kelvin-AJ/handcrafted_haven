@@ -2,7 +2,7 @@
 import styles from "../page.module.css";
  import Navbar from "../ui/navbars";
  import Footer from "../ui/footer";
- import Production from "../ui/products"
+ import Production from "../products/products"
 
 export default function products() {
   return (
