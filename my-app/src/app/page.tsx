@@ -1,6 +1,5 @@
 
 import styles from "./page.module.css";
-//  import Link from "next/link";
  import Image from "next/image";
  import ProductSample from "./ui/product-sample";
 import Navbar from "../app/ui/navbars";
