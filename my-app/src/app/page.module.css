@@ -1,4 +1,3 @@
-
 .page {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -10,6 +9,7 @@
   font-family: var(--font-geist-sans);
   color: var(--foreground);
   background-color: var(--background);
+  /* line-height: 1.5rem; */
 }
 
 .nav {
@@ -75,10 +75,7 @@
   height: 40px;
   padding: 0 16px;
   border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -95,6 +92,66 @@ a.primary {
   gap: 8px;
 }
 
+.myProfile {
+  padding: 0 2rem;
+  border-radius: 1rem;
+}
+.profileImage {
+  border-radius: 100%;
+  transition: all 0.2s;
+}
+.profileImage:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 5px 5px var(--background);
+}
+.profileMainGrid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  font-size: 1.3rem;
+}
+.myProfileGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+}
+.profileMainGrid > div {
+  padding: 1rem;
+}
+
+.sellerStory {
+  font-size: 1.3rem;
+  padding: 3rem;
+  border-left: 1px solid var(--nav-background);
+  display: grid;
+}
+.ratingStar {
+  color: goldenrod;
+}
+.productHeader {
+  display: flex;
+  place-items: center;
+}
+.productHeader div {
+  margin-left: auto;
+}
+.productCount {
+  margin-left: 1rem;
+}
+.buttonPurple {
+  width: 100%;
+  background-color: var(--nav-background);
+  color: var(--background);
+  font-size: larger;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: none;
+}
+
+.productListing {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
 .secondary {
   border-color: var(--accent-text-1);
   color: var(--accent-text-1);
@@ -140,7 +197,7 @@ a.primary {
   margin: 3rem 0;
 }
 
-.sub img{
+.sub img {
   border-radius: 10px;
 }
 
@@ -246,11 +303,11 @@ a.primary {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .hambuger{
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
+  .hambuger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
 
   .para {
     font-size: 20px;
@@ -270,52 +327,52 @@ a.primary {
 
 @media screen and (max-width: 600px) {
   .page {
-   
     text-align: center;
     justify-content: center;
-    padding: 10px ;
+    padding: 10px;
     margin: 0;
   }
   .nav {
     position: relative;
   }
-  
+
   .navLinks {
-   display: none;
+    display: none;
   }
 
-.showMenu {
-  display: flex !important; 
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 10px;
-  background-color: var(--nav-background);
-  padding: 10px;
-  border-radius: 8px;
-  animation: slideDown 0.3s ease;
-  color: azure;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10%);
+  .showMenu {
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 10px;
+    background-color: var(--nav-background);
+    padding: 10px;
+    border-radius: 8px;
+    animation: slideDown 0.3s ease;
+    color: azure;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   .hambuger {
     padding: 0 10px;
   }
 
-  .bar1,.bar2,.bar3 {
+  .bar1,
+  .bar2,
+  .bar3 {
     width: 30px;
     height: 4px;
-    background-color:var(--foreground);
+    background-color: var(--foreground);
     margin: 6px 0;
     transition: 0.4s;
     border-radius: 10px;
@@ -329,4 +386,3 @@ a.primary {
     text-align: center;
   }
 }
-

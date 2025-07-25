@@ -1,9 +1,10 @@
 .productCard {
-  display: flex;
+  display: grid;
   flex-direction: column;
   max-width: 250px;
   width: 100%;
   margin: 0 auto;
+  padding: 0.2rem;
 }
 
 .productCard img {
@@ -18,11 +19,19 @@
   color: var(--foreground);
   text-align: left !important;
 }
-
 .itemPrice {
   font-weight: 500;
   color: var(--accent-text-1);
   margin-top: 0;
+}
+.addToCart {
+  width: 100%;
+  background-color: var(--nav-background);
+  color: var(--background);
+  font-size: larger;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: none;
 }
 
 @media (prefers-color-scheme: dark) {
