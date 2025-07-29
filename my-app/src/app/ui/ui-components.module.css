@@ -11,7 +11,8 @@
   border-radius: 4px;
   margin-bottom: 12px;
 }
-.itemName, .itemPrice{
+.itemName,
+.itemPrice {
   text-align: left !important;
 }
 .itemName {
@@ -28,9 +29,9 @@
   width: 100%;
   background-color: var(--nav-background);
   color: var(--background);
-  font-size: larger;
+  /* font-size: larger; */
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   border: none;
 }
 
@@ -44,13 +45,5 @@
   .productCard {
     padding: 24px;
     max-width: 300px;
-  }
-
-  .itemName {
-    font-size: 1.5rem;
-  }
-
-  .itemPrice {
-    font-size: 1.25rem;
   }
 }

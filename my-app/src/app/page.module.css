@@ -1,15 +1,4 @@
 .page {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding-bottom: 50px;
-  gap: 32px;
-  font-family: var(--font-geist-sans);
-  color: var(--foreground);
-  background-color: var(--background);
-  /* line-height: 1.5rem; */
 }
 
 .nav {
@@ -91,11 +80,6 @@ a.primary {
   color: var(--background);
   gap: 8px;
 }
-
-.myProfile {
-  padding: 0 2rem;
-  border-radius: 1rem;
-}
 .profileImage {
   border-radius: 100%;
   transition: all 0.2s;
@@ -104,11 +88,18 @@ a.primary {
   transform: scale(1.05);
   box-shadow: 0px 0px 5px 5px var(--background);
 }
+.profileCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .profileMainGrid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr;
   align-items: center;
-  font-size: 1.3rem;
+  align-content: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-size: 1rem;
 }
 .myProfileGrid {
   display: grid;
@@ -118,18 +109,25 @@ a.primary {
   padding: 1rem;
 }
 
-.sellerStory {
-  font-size: 1.3rem;
-  padding: 3rem;
-  border-left: 1px solid var(--nav-background);
+.sellerReviews {
+  font-size: 1rem;
+  padding: 0 2rem;
+  border-left: 2px solid #a9a9a9;
   display: grid;
+}
+.sellerReviews > h3 {
+  margin-bottom: 1rem;
 }
 .ratingStar {
   color: goldenrod;
 }
+.sellerProductsList {
+  width: 100%;
+}
 .productHeader {
   display: flex;
   place-items: center;
+  width: 100%;
 }
 .productHeader div {
   margin-left: auto;
@@ -141,15 +139,14 @@ a.primary {
   width: 100%;
   background-color: var(--nav-background);
   color: var(--background);
-  font-size: larger;
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
   border: none;
 }
 
 .productListing {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 2rem;
 }
 .secondary {
@@ -184,6 +181,28 @@ a.primary {
   overflow: hidden;
   width: 100%;
   margin: 3rem 0;
+}
+
+/* Reviews */
+.reviewItem {
+  background-color: var(--background);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+}
+
+.reviewText {
+  color: #555;
+  line-height: 1.6;
+  margin-top: 0;
+}
+.reviewDate {
+  font-size: 0.85rem;
+  color: #888;
+  text-align: right;
+  margin: 0;
 }
 
 .sub {
@@ -267,6 +286,7 @@ a.primary {
   }
   .main {
     align-items: initial;
+    padding-top: 3rem;
   }
 
   .main ol {

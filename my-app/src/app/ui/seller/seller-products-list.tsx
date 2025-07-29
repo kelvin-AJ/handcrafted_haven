@@ -2,6 +2,52 @@ import styles from "../../page.module.css";
 import ProductSample from "../product-sample";
 import { RiApps2AddFill } from "react-icons/ri";
 
+
+
+const products = [
+  {
+    itemName: "Native Woven Basket",
+    itemPrice: "$200",
+    imgSrc: "/images/img.jpg"
+  },
+  {
+    itemName: "Vintage Game Board",
+    itemPrice: "$20",
+    imgSrc: "/images/img1.jpg"
+  },
+  {
+    itemName: "Wall Flowers",
+    itemPrice: "$10",
+    imgSrc: "/images/img2.jpg"
+  },
+  {
+    itemName: "Fine China Dishes",
+    itemPrice: "$520",
+    imgSrc: "/images/img3.jpg"
+  },
+  {
+    itemName: "Native Woven Basket",
+    itemPrice: "$200",
+    imgSrc: "/images/img.jpg"
+  },
+  {
+    itemName: "Vintage Game Board",
+    itemPrice: "$20",
+    imgSrc: "/images/img1.jpg"
+  },
+  {
+    itemName: "Wall Flowers",
+    itemPrice: "$10",
+    imgSrc: "/images/img2.jpg"
+  },
+  {
+    itemName: "Fine China Dishes",
+    itemPrice: "$520",
+    imgSrc: "/images/img3.jpg"
+  }
+];
+
+
 export default function SellerProductsList() {
      return (
     <div>
@@ -16,26 +62,19 @@ export default function SellerProductsList() {
         </div>
         <div className={styles.productListing}>
             {/* Products listing */}
-            <ProductSample 
-              itemName={"Native Woven Basket"}
-              itemPrice={"$200"}
-              imgSrc="/images/img.jpg"
-              />
-            <ProductSample 
-              itemName={"Vintage Game Board"}
-              itemPrice={"$20"}
-              imgSrc="/images/img1.jpg"
-              />
-            <ProductSample 
-              itemName={"Wall  Flowers"}
-              itemPrice={"$10"}
-              imgSrc="/images/img2.jpg"
-              />
-            <ProductSample 
-              itemName={"Fine China Dishes"}
-              itemPrice={"$520"}
-              imgSrc="/images/img3.jpg"
-              />
+
+            {
+              products.map((product, i) => {
+                return (
+                  <ProductSample 
+                    key={i * Date.now()}
+                    itemName={product.itemName}
+                    itemPrice={product.itemPrice}
+                    imgSrc={product.imgSrc}
+                    />
+                )
+              })
+            }
         </div>
       
     </div>

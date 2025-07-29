@@ -7,8 +7,6 @@ export default function SellerGrid() {
     <div className={styles.page}>
       <SellerInfo />
       <SellerProductsList />
-      
-      {/* Artisans products grid: Header, product count, add product button) */}
     </div>
   );
 }
