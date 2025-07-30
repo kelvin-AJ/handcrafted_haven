@@ -1,15 +1,4 @@
-
 .page {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding-bottom: 50px;
-  gap: 32px;
-  font-family: var(--font-geist-sans);
-  color: var(--foreground);
-  background-color: var(--background);
 }
 
 .nav {
@@ -75,10 +64,7 @@
   height: 40px;
   padding: 0 16px;
   border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -94,7 +80,75 @@ a.primary {
   color: var(--background);
   gap: 8px;
 }
+.profileImage {
+  border-radius: 100%;
+  transition: all 0.2s;
+}
+.profileImage:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 5px 5px var(--background);
+}
+.profileCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.profileMainGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  align-content: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+.myProfileGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+}
+.profileMainGrid > div {
+  padding: 1rem;
+}
 
+.sellerReviews {
+  font-size: 1rem;
+  padding: 0 2rem;
+  border-left: 2px solid #a9a9a9;
+  display: grid;
+}
+.sellerReviews > h3 {
+  margin-bottom: 1rem;
+}
+.ratingStar {
+  color: goldenrod;
+}
+.sellerProductsList {
+  width: 100%;
+}
+.productHeader {
+  display: flex;
+  place-items: center;
+  width: 100%;
+}
+.productHeader div {
+  margin-left: auto;
+}
+.productCount {
+  margin-left: 1rem;
+}
+.buttonPurple {
+  width: 100%;
+  background-color: var(--nav-background);
+  color: var(--background);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border: none;
+}
+
+.productListing {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 2rem;
+}
 .secondary {
   border-color: var(--accent-text-1);
   color: var(--accent-text-1);
@@ -129,6 +183,28 @@ a.primary {
   margin: 3rem 0;
 }
 
+/* Reviews */
+.reviewItem {
+  background-color: var(--background);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+}
+
+.reviewText {
+  color: #555;
+  line-height: 1.6;
+  margin-top: 0;
+}
+.reviewDate {
+  font-size: 0.85rem;
+  color: #888;
+  text-align: right;
+  margin: 0;
+}
+
 .sub {
   display: flex;
   flex-direction: column;
@@ -140,7 +216,7 @@ a.primary {
   margin: 3rem 0;
 }
 
-.sub img{
+.sub img {
   border-radius: 10px;
 }
 
@@ -210,6 +286,7 @@ a.primary {
   }
   .main {
     align-items: initial;
+    padding-top: 3rem;
   }
 
   .main ol {
@@ -246,11 +323,11 @@ a.primary {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .hambuger{
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
+  .hambuger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
 
   .para {
     font-size: 20px;
@@ -270,52 +347,52 @@ a.primary {
 
 @media screen and (max-width: 600px) {
   .page {
-   
     text-align: center;
     justify-content: center;
-    padding: 10px ;
+    padding: 10px;
     margin: 0;
   }
   .nav {
     position: relative;
   }
-  
+
   .navLinks {
-   display: none;
+    display: none;
   }
 
-.showMenu {
-  display: flex !important; 
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 10px;
-  background-color: var(--nav-background);
-  padding: 10px;
-  border-radius: 8px;
-  animation: slideDown 0.3s ease;
-  color: azure;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10%);
+  .showMenu {
+    display: flex !important;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 10px;
+    background-color: var(--nav-background);
+    padding: 10px;
+    border-radius: 8px;
+    animation: slideDown 0.3s ease;
+    color: azure;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   .hambuger {
     padding: 0 10px;
   }
 
-  .bar1,.bar2,.bar3 {
+  .bar1,
+  .bar2,
+  .bar3 {
     width: 30px;
     height: 4px;
-    background-color:var(--foreground);
+    background-color: var(--foreground);
     margin: 6px 0;
     transition: 0.4s;
     border-radius: 10px;
@@ -329,4 +406,3 @@ a.primary {
     text-align: center;
   }
 }
-
