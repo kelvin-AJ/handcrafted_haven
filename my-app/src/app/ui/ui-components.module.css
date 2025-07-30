@@ -11,6 +11,12 @@
   border-radius: 4px;
   margin-bottom: 12px;
 }
+
+.productImage .addToCart{
+    width: 250px;
+    margin: 10px 0;
+   }
+   
 .itemName,
 .itemPrice {
   text-align: left !important;
@@ -35,6 +41,7 @@
   border: none;
 }
 
+
 @media (prefers-color-scheme: dark) {
   .productCard {
     box-shadow: 0 4px 6px rgba(var(--white-rgb), 0.05);
@@ -46,9 +53,24 @@
     padding: 24px;
     max-width: 300px;
   }
-}
+
 
   .itemPrice {
     font-size: 1.25rem;
   }
+
+  .productsContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .productImage{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+
 }
