@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "../../page.module.css";
 import ProductSample from "../product-sample";
 import { RiApps2AddFill } from "react-icons/ri";
@@ -50,14 +51,14 @@ const products = [
 
 export default function SellerProductsList() {
      return (
-    <div>
+    <div className={styles.sellerProductsList}>
         <div className={styles.productHeader}>
             {/* Products header bar */}
             
             <h2>Products</h2>
             <p className={styles.productCount}><span>4</span> Products</p>
             <div>
-                <button className={styles.buttonPurple}><RiApps2AddFill /> Add Product</button>
+                <Link href="/products/create"><button className={styles.buttonPurple}><RiApps2AddFill /> Add Product</button></Link>
             </div>
         </div>
         <div className={styles.productListing}>

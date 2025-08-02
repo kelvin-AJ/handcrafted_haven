@@ -142,8 +142,13 @@ a.primary {
   border-radius: 0.5rem;
   padding: 0.5rem;
   border: none;
+  transition: all 0.2s;
 }
-
+.buttonPurple:hover {
+  background-color: var(--button-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--licorice-rgb), 0.2);
+}
 .productListing {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -332,7 +337,6 @@ a.primary {
   .para {
     font-size: 20px;
   }
-
 
   .footer {
     flex-wrap: nowrap;
