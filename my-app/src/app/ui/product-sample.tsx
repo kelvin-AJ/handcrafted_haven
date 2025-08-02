@@ -10,7 +10,7 @@ export default function ProductSample({ itemName, itemPrice, imgSrc }: { itemNam
                 aria-hidden
                 src={imgSrc}
                 alt={itemName}
-                width={210}
+                width={250}
                 height={240}
             />
             <h4 className={styles.itemName}>{itemName}</h4>
