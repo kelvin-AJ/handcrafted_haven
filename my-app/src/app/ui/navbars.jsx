@@ -29,6 +29,9 @@ export default function Navbar() {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
+          <li>
+            <Link href="/signin">Get Started</Link>
+          </li>
         </ul>
       </nav>
     </>
