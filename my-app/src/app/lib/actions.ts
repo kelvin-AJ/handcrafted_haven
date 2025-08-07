@@ -15,6 +15,19 @@ import products from '../seller/page'
 
 // Create Product
 
+export async function createProductSeeds(products: IProduct[]) {
+  await connectTodb();
+  const response = await Product.insertMany(products);
+  return response;
+}
+
+export async function deleteAllProducts() {
+  await connectTodb();
+  const response = await Product.deleteMany({});
+  return response;
+}
+
+
 export async function createProduct(prevState: State, formData: FormData): Promise<State> {
   const title = formData.get('title')?.toString() || "";
   const price = formData.get('price')?.toString() || "";
@@ -81,4 +94,26 @@ export async function deleteProduct(id: string | Types.ObjectId): Promise<IProdu
   await connectTodb()
   const product = await Product.findByIdAndDelete(id)
   return product ? product.toObject() : null
+}
+
+
+// USERS
+export async function getAllUsers(): Promise<IUser[]> {
+  await connectTodb()
+  const users = await User.find()
+  return users.map(u => u.toObject())
+}
+
+
+export async function createUser(user: IUser): Promise<IUser> {
+  await connectTodb()
+  const response = await User.insertOne(user);
+  
+  return response
+}
+
+export async function deleteUser(id: string | Types.ObjectId): Promise<IUser | null> {
+  await connectTodb()
+  const user = await User.findByIdAndDelete(id)
+  return user ? user.toObject() : null
 }
