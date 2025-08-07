@@ -4,7 +4,7 @@ import styles from "../page.module.css";
  import Footer from "../ui/footer";
  import Production from "../products/products"
 
-export default function products() {
+export default function Products() {
   return (
     <div className={styles.page}>
 
