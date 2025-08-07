@@ -117,3 +117,31 @@ export async function deleteUser(id: string | Types.ObjectId): Promise<IUser | n
   const user = await User.findByIdAndDelete(id)
   return user ? user.toObject() : null
 }
+
+
+
+// FEEDBACKS (REVIEWS)
+export async function createFeedback(feedback: IFeedback): Promise<IFeedback> {
+  await connectTodb()
+  const response = await Feedback.insertOne(feedback)
+  return response
+}
+
+export async function getFeedbacksforSeller(sellerId: string | Types.ObjectId): Promise<IFeedback[]> {
+  await connectTodb()
+  const feedbacks = await Feedback.find({ seller: sellerId })
+  return feedbacks.map(f => f.toObject())
+}
+
+export async function updateFeedback(id: string | Types.ObjectId, updates: Partial<IFeedback>): Promise<IFeedback | null> {
+  await connectTodb()
+  const feedback = await Feedback.findByIdAndUpdate(id, updates, { new: true })
+  return feedback ? feedback.toObject() : null
+}
+
+export async function deleteFeedback(id: string | Types.ObjectId): Promise<IFeedback | null> {
+  await connectTodb()
+  const feedback = await Feedback.findByIdAndDelete(id)
+  return feedback ? feedback.toObject() : null
+
+}
