@@ -1,4 +1,4 @@
-// import { Button } from "@/components/ui/button"
+"use client"
 import {
   Card,
   CardContent,
@@ -9,8 +9,39 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import styles from "./form.module.css"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function LoginForm() {
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
+  const router = useRouter()
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setError("")
+    setSuccess("")
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData.entries())
+
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+
+    if (res.ok) {
+      setSuccess("Login successful! Redirecting to home...")
+      setTimeout(() => {
+        router.push("/")
+      }, 1500)
+    } else {
+      const result = await res.json()
+      setError(result.message || "Login failed")
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Card className={styles.card}>
@@ -22,7 +53,7 @@ export default function LoginForm() {
         </CardHeader>
 
         <CardContent className={styles.cont}>
-          <form action="./login" method="post" className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className={styles.inputGroup}>
               <Label htmlFor="email">Email Address</Label>
               <Input
@@ -48,21 +79,24 @@ export default function LoginForm() {
               />
             </div>
 
+            {error && <div className={styles.error}>{error}</div>}
+            {success && <div className={styles.success}>{success}</div>}
+
             <button type="submit" className={styles.button}>
               Sign In
             </button>
           </form>
         </CardContent>
 
-         <div className={styles.forgotLink}>
-              <a href="/forgot-password" className={styles.forgotLink}>
-                Forgot password?
-              </a>
-            </div>
+        <div className={styles.forgotLink}>
+          <a href="/forgot-password" className={styles.forgotLink}>
+            Forgot password?
+          </a>
+        </div>
 
         <CardFooter className={styles.footer}>
           Don’t have an account?
-          <a href="/register" className={styles.link}>
+          <a href="/signup" className={styles.link}>
             Sign up
           </a>
         </CardFooter>
