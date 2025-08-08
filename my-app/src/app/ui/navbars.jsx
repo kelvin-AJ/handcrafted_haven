@@ -21,13 +21,13 @@ export default function Navbar() {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/seller">Seller</Link>
+            <Link href="/seller">My Profile</Link>
           </li>
           <li>
-            <Link href="/products">Products</Link>
+            <Link href="/products">All Products</Link>
           </li>
           <li>
-            <Link href="/contact">Contact</Link>
+            <Link href="/contact">Logout</Link>
           </li>
           <li>
             <Link href="/signin">Get Started</Link>

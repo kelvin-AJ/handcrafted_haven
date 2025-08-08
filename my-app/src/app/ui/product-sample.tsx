@@ -7,7 +7,6 @@ export default function ProductSample({ itemName, itemPrice, imgSrc }: { itemNam
     return (
         <div className={styles.productCard}>
             <Image
-                aria-hidden
                 src={imgSrc}
                 alt={itemName}
                 width={250}

@@ -1,14 +1,14 @@
 import styles from "../../page.module.css";
 import { IoStar } from "react-icons/io5";
 
-type ArtisanRevieProps = {
+type ArtisanReviewProps = {
     name: string;
   rating: string;
   text: string;
   date: string;
 }
 
-export default function ArtisanReview({ name , rating, text, date } : ArtisanRevieProps) {
+export default function ArtisanReview({ name , rating, text, date } : ArtisanReviewProps) {
   return (
     <div className={styles.reviewItem}>
       <div className={styles.reviewHeader}>
