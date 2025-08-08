@@ -1,11 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "../page.module.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn]= useState(false);
+
   const toggleMenu = () => setIsOpen(!isOpen);
+// check login state
+  useEffect(() => {
+    const loginStatus =localStorage.getItem("loggedIn") === "true";
+    setIsLoggedIn(loginStatus)
+  }, [])
 
   return (
     <>
@@ -26,12 +33,15 @@ export default function Navbar() {
           <li>
             <Link href="/products">All Products</Link>
           </li>
+          {isLoggedIn ?(
           <li>
-            <Link href="/contact">Logout</Link>
+            <Link href="/">Logout</Link>
           </li>
-          <li>
+          ) : (
+         <li>
             <Link href="/signin">Get Started</Link>
           </li>
+          )}
         </ul>
       </nav>
     </>
