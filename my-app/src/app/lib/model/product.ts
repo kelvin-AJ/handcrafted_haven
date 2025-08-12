@@ -1,6 +1,7 @@
 import { Schema, model, models, Types } from 'mongoose'
 
 export interface IProduct {
+  _id: Types.ObjectId
   title: string
   description?: string
   price: number
@@ -10,7 +11,8 @@ export interface IProduct {
 
 
 const productSchema = new Schema<IProduct>({
-  title: { type: String, required: true },
+  _id: { type: Schema.Types.ObjectId, default: new Types.ObjectId() },
+  title: { type: String, required:  true },
   description: String,
   price: { type: Number, required: true },
   seller: { type: Schema.Types.ObjectId, ref: 'User', required: true },

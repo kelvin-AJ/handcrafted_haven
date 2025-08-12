@@ -18,13 +18,13 @@
 }
 
 .itemName,
-.itemPrice {
+.itemPrice,
+.itemDescription {
   text-align: left !important;
 }
 .itemName {
-  font-weight: 500;
+  font-weight: 900;
   color: var(--foreground);
-  text-align: left !important;
 }
 .itemPrice {
   font-weight: 500;

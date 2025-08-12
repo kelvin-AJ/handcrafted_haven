@@ -1,46 +1,43 @@
-"use client"
+"use client";
+
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import styles from "./form.module.css"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import styles from "./form.module.css";
+import { useActionState, useEffect } from "react";
+import { loginUser } from "@/app/lib/actions";
+import { useRouter } from "next/navigation"; 
+import { LoginState } from "@/app/lib/definitions";
 
 export default function LoginForm() {
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
-  const router = useRouter()
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
-    const form = e.currentTarget
-    const formData = new FormData(form)
-    const data = Object.fromEntries(formData.entries())
-
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-
-    if (res.ok) {
-      setSuccess("Login successful! Redirecting to home...")
-      setTimeout(() => {
-        router.push("/")
-      }, 1500)
-    } else {
-      const result = await res.json()
-      setError(result.message || "Login failed")
+  
+  const initialState: LoginState = {
+    message: "",
+    secret: undefined,
+    errors: {
+      email: "",
+      password: ""
     }
-  }
+  };
+
+  const [state, formAction] = useActionState(loginUser, initialState);
+  const router = useRouter();
+
+
+  useEffect(() => {
+    if (state?.secret && router) {
+      sessionStorage.setItem('authToken', state?.secret);
+
+      router.push('/products');
+    }
+  }, [state?.secret, router]);
+
 
   return (
     <div className={styles.container}>
@@ -53,7 +50,7 @@ export default function LoginForm() {
         </CardHeader>
 
         <CardContent className={styles.cont}>
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form action={formAction} className="space-y-5">
             <div className={styles.inputGroup}>
               <Label htmlFor="email">Email Address</Label>
               <Input
@@ -64,6 +61,9 @@ export default function LoginForm() {
                 required
                 className={styles.input}
               />
+              {state.errors?.email && (
+                <p style={{ color: 'red' }}>{state.errors.email}</p>
+              )}
             </div>
 
             <div className={styles.inputGroup}>
@@ -77,10 +77,14 @@ export default function LoginForm() {
                 title="At least 8 characters, one uppercase, one lowercase, and one number"
                 className={styles.input}
               />
+              {state?.errors?.password && (
+                <p style={{ color: 'red' }}>{state.errors.password}</p>
+              )}
             </div>
 
-            {error && <div className={styles.error}>{error}</div>}
-            {success && <div className={styles.success}>{success}</div>}
+            {state.message && (
+                <p style={{ color: 'red' }}>{state.message}</p>
+            )}
 
             <button type="submit" className={styles.button}>
               Sign In
@@ -102,5 +106,5 @@ export default function LoginForm() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

@@ -2,28 +2,14 @@ import styles from "../../page.module.css";
 import Image from "next/image";
 import { IoStar } from "react-icons/io5";
 import ArtisanReview from "./artisan-review"; 
-export default function SellerInfo() {
-  const reviews = [
-    {
-      name: "Chiamaka Okoro",
-      rating: "5.0",
-      text: "Absolutely stunning craftsmanship! The vase I bought is even more beautiful in person. Nephi's attention to detail is incredible. The packaging was also very secure. Will definitely buy again!",
-      date: "July 15, 2025",
-    },
-    {
-      name: "Tunde Adebayo",
-      rating: "4.0",
-      text: "Great quality mug. It feels sturdy and has a unique glaze. Shipping took a little longer than expected, but the product itself is fantastic. Worth the wait.",
-      date: "June 28, 2025",
-    },
-    {
-      name: "Fatima Sani",
-      rating: "5.0",
-      text: "I commissioned a custom dinnerware set and Nephi brought my vision to life perfectly. Communication was excellent throughout the process. I'm so thrilled with the result. Highly recommended for custom pottery work.",
-      date: "May 10, 2025",
-    },
-  ];
+import { getFeedbacksforSeller} from "@/app/lib/actions";
 
+export default async function SellerInfo({sellerId} : {sellerId: string}) {
+  const feedbacks = await getFeedbacksforSeller(sellerId);
+  console.log(feedbacks)
+
+
+  
   return (
     <div>
       <h1>Your Profile</h1>
@@ -58,12 +44,12 @@ export default function SellerInfo() {
         <div className={styles.sellerReviews}>
           <h3>Reviews</h3>
           <div className={styles.reviewList}>
-            {reviews.map((review, index) => (
+            {feedbacks.map((review, index) => (
               <ArtisanReview
-                key={index}
-                name={review.name}
+                key={index * 1000}
+                author={review.author.name}
                 rating={review.rating}
-                text={review.text}
+                comment={review.comment}
                 date={review.date}
               />
             ))}

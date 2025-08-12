@@ -2,23 +2,26 @@ import styles from "../../page.module.css";
 import { IoStar } from "react-icons/io5";
 
 type ArtisanReviewProps = {
-    name: string;
-  rating: string;
-  text: string;
-  date: string;
+    author: string;
+  rating: number;
+  comment: string;
+  date: Date;
+  key: number;
 }
 
-export default function ArtisanReview({ name , rating, text, date } : ArtisanReviewProps) {
+export default function ArtisanReview({ author, rating, comment, date} : ArtisanReviewProps) {
+  console.log(date)
+
   return (
     <div className={styles.reviewItem}>
       <div className={styles.reviewHeader}>
-        <h3>{name}</h3>
-        <p className={styles.ratingStar}><IoStar /> {rating}</p>
+        <h3>{author}</h3>
+        <p className={styles.ratingStar}><IoStar /> {rating.toFixed(1)}</p>
       </div>
       <p className={styles.reviewText}>
-        {text}
+        {comment}
       </p>
-      <p className={styles.reviewDate}>{date}</p>
+      <p className={styles.reviewDate}>{date.toLocaleDateString()}</p>
     </div>
   );
 }

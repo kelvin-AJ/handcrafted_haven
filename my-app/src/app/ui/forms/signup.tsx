@@ -9,37 +9,30 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import styles from "./form.module.css"
-import { useState } from "react"
+import { useActionState} from "react"
 import { useRouter } from "next/navigation"
+import { createUser } from "@/app/lib/actions"
+import { SignupState } from "@/app/lib/definitions"
 
 export default function SignupForm() {
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
-  const router = useRouter()
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
-    const form = e.currentTarget
-    const formData = new FormData(form)
-    const data = Object.fromEntries(formData.entries())
-
-    const res = await fetch("/api/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-
-    if (res.ok) {
-      setSuccess("Registration successful! Redirecting to home...")
-      setTimeout(() => {
-        router.push("/")
-      }, 1500)
-    } else {
-      const result = await res.json()
-      setError(result.message || "Registration failed")
+  const initialState : SignupState= {
+    message: "",
+    errors: {
+      name: "",
+      email: "",
+      password: "",
+      role: ""
     }
+  }
+
+  const [state, formAction] = useActionState(createUser, initialState);
+  const router = useRouter();
+
+  if (state.message === "User created successfully!") {
+    setTimeout(() => {
+      router.push('/signin');
+    }, 2000);
   }
 
   return (
@@ -53,7 +46,7 @@ export default function SignupForm() {
         </CardHeader>
 
         <CardContent className={styles.cont}>
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form action={formAction} className="space-y-5">
             <div className={styles.inputGroup}>
               <Label htmlFor="name">Full Name</Label>
               <Input
@@ -76,6 +69,9 @@ export default function SignupForm() {
                 required
                 className={styles.input}
               />
+              {state.errors?.email && (
+                <p style={{ color: 'red' }}>{state.errors.email}</p>
+              )}
             </div>
 
             <div className={styles.inputGroup}>
@@ -89,6 +85,9 @@ export default function SignupForm() {
                 title="At least 8 characters, one uppercase, one lowercase, and one number"
                 className={styles.input}
               />
+              {state?.errors?.password && (
+                <p style={{ color: 'red' }}>{state.errors.password}</p>
+              )}
             </div>
 
             <div className={styles.inputGroup}>
@@ -103,11 +102,12 @@ export default function SignupForm() {
                 <option value="user">User</option>
                 <option value="seller">Seller</option>
               </select>
+              {state?.errors?.role && (
+                <p style={{ color: 'red' }}>{state.errors.role}</p>
+              )}
             </div>
 
-            {error && <div className={styles.error}>{error}</div>}
-            {success && <div className={styles.success}>{success}</div>}
-
+            
             <button type="submit" className={styles.button}>
               Sign Up
             </button>

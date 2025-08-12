@@ -7,3 +7,23 @@ export type State = {
     imageURL?: string;
   };
 };
+
+export type LoginState = {
+    message?: string;
+    secret?: string;
+    errors?: {
+      email?: string;
+      password?: string;
+    };
+  };
+
+  export type SignupState = {
+    message?: string;
+    errors?: {
+      name?: string;
+      email?: string;
+      password?: string;
+      role?: string;
+    };
+  
+  }
