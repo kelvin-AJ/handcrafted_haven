@@ -1,7 +1,6 @@
 import styles from "../ui/ui-components.module.css";
 import Product from "../ui/product";
 import { getProducts } from "../lib/actions";
-import Link from "next/link";
 
 export default async function Products() {
   const allProducts = await getProducts();

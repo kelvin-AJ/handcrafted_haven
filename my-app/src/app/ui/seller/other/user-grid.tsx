@@ -5,7 +5,6 @@ import { IUser } from "@/app/lib/model/userModel";
 
 export default function UserGrid({ user } : { user: IUser | null}) {
 
-  console.log(user)
   return (
     <div className={styles.page}>
       <UserInfo

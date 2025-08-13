@@ -38,3 +38,11 @@ export type EditFormState = {
       title?: string;
     }
 }
+
+export type ReviewState = {
+  message?: string;
+  errors?: {
+    comment : "";
+    rating : "";
+  }
+}

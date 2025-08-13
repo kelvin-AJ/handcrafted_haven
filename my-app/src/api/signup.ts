@@ -15,7 +15,6 @@ export async function POST(req: Request) {
 
     const { name, email, password, role }: RegisterRequestBody = await req.json();
 
-    console.log(name, email, password, role);
 
     const existingUser: IUser | null = await User.findOne({ email }).exec();
     if (existingUser) {

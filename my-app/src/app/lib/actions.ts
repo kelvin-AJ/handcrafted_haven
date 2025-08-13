@@ -6,7 +6,7 @@ import { User, IUser } from './model/userModel'
 import { Feedback, IFeedback } from './model/feedbackModel'
 import { Types } from 'mongoose';
 import { revalidatePath } from 'next/cache';
-import { State, LoginState, SignupState, EditFormState } from '../lib/definitions';
+import { State, LoginState, SignupState, EditFormState, ReviewState } from '../lib/definitions';
 import { ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -103,9 +103,7 @@ export async function createProduct(prevState: State, formData: FormData): Promi
 
 
     const response = await Product.create(product);
-    console.log(response);
 
-    console.log("response")
   } catch (error) {
     return { message: 'Database Error: Failed to Create Product.' };
   }
@@ -428,23 +426,53 @@ export async function deleteUser(id: string | Types.ObjectId): Promise<IUser | n
 
 
 // FEEDBACKS (REVIEWS)
-export async function createFeedback(feedback: IFeedback): Promise<IFeedback> {
+export async function createFeedback(prevState: ReviewState, formData: FormData): Promise<ReviewState> {
+
+  const comment = formData.get('comment')?.toString() || "";
+  const rating = formData.get('rating')?.toString() || "";
+  const sellerId = formData.get('sellerId')?.toString() || "";
+
+
+
+  const errors = {
+    comment: comment ? undefined : "Comment is required",
+    rating: rating ? undefined : "Rating is required"
+  }
+
+    const hasErrors = Object.values(errors).some(Boolean);
+  if (hasErrors) {
+    return { errors: errors as { comment: ""; rating: ""; } };
+  }
+
   try {
     await connectTodb();
+
+    const auth = await authenticateUser();
+    const authorId = new ObjectId(auth.userId);
+
+    const feedback : IFeedback = {
+      comment,
+      rating: parseFloat(rating),
+      author: new Types.ObjectId(authorId),
+      seller: new Types.ObjectId(sellerId),
+      date: new Date()
+    }
+
     const newFeedback = await Feedback.create(feedback);
-    // Optionally revalidate paths that show feedback
-    return newFeedback.toObject();
+
+    return { message: "Feedback created successfully" };
+
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to create feedback.');
+    return {message: 'Failed to add Review'}
   }
 }
 
-export async function getFeedbacksforSeller(): Promise<IFeedback[]> {
+export async function getFeedbacksforSeller(userId=null): Promise<IFeedback[]> {
   try {
     await connectTodb();
     const auth = await authenticateUser();
-    const sellerId = new ObjectId(auth.userId);
+    const sellerId = userId ? userId : new ObjectId(auth.userId);
 
 
     const feedbacks = await Feedback.find({ seller: new ObjectId(sellerId) }).populate("author")

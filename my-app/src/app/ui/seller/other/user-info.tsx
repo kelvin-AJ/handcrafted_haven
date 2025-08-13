@@ -1,13 +1,12 @@
 import styles from "../../../page.module.css";
 import Image from "next/image";
-import { IoStar } from "react-icons/io5";
+import { IoStar, IoAdd } from "react-icons/io5";
 import ArtisanReview from "../artisan-review"; 
 import { getFeedbacksforSeller} from "@/app/lib/actions";
 import Link from 'next/link'
 
 export default async function UserInfo({userId, name, rating, profileImage, role, joinedDate, title, bio} : {userId : string, name : string, rating : number, profileImage : string, role : string, joinedDate : Date, title : string, bio : string}) {
-  const feedbacks = await getFeedbacksforSeller();
-
+  const feedbacks = await getFeedbacksforSeller(userId);
   const dateJoined: string = joinedDate
     ? new Date(joinedDate).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -52,6 +51,9 @@ export default async function UserInfo({userId, name, rating, profileImage, role
         </div>
         <div className={styles.sellerReviews}>
           <h3>Reviews</h3>
+          <Link href={`/seller/${userId}/details/review`} className={styles.buttonPurple}>
+            <IoAdd /> Add Review
+          </Link>
           <div className={styles.reviewList}>
             {feedbacks.map((review, index) => (
               <ArtisanReview
