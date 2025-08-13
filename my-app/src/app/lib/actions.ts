@@ -6,7 +6,7 @@ import { User, IUser } from './model/userModel'
 import { Feedback, IFeedback } from './model/feedbackModel'
 import { Types } from 'mongoose';
 import { revalidatePath } from 'next/cache';
-import { State, LoginState, SignupState } from '../lib/definitions';
+import { State, LoginState, SignupState, EditFormState } from '../lib/definitions';
 import { ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -322,21 +322,80 @@ export async function loginUser(prevState: LoginState, formData: FormData): Prom
   }
 };
 
-export async function getLoggedInUser() : Promise<IUser | null> {
+export async function getLoggedInUser(): Promise<IUser | null> {
   await connectTodb();
   const auth = await authenticateUser();
 
   try {
-    const response = User.findById(auth.userId).select('-password')
+    const user = await User.findById(auth.userId)
+      .select('-password')
+      .lean();
 
-    return response;
-    
-  } catch(error) {
-    console.log(error);
-    return {} as IUser
+    if (!user) return null;
+
+    return {
+      ...user,
+      _id: user._id.toString(), 
+    } as IUser;
+
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+
+export async function updateUser(
+  prevState: EditFormState,
+  formData: FormData
+): Promise<EditFormState> {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    return { message: 'Server configuration error.', errors: {} };
   }
 
+  try {
+    const auth = await authenticateUser();
+    const userId = new Types.ObjectId(auth.userId);
+
+    const name = formData.get('name')?.toString() || '';
+    const title = formData.get('title')?.toString() || '';
+    const bio = formData.get('bio')?.toString() || '';
+    const role = formData.get('role')?.toString() || '';
+
+    const errors: Partial<EditFormState['errors']> = {
+      name: name ? undefined : 'Name is required.',
+      title: title ? undefined : 'Title is required.',
+      bio: bio ? undefined : 'Bio is required.',
+      role: role ? undefined : 'Role is required.',
+    };
+
+     const updates = { name, title, bio, role };
+    
+    if (Object.values(errors).some(Boolean)) {
+      return { errors, message: 'Validation failed.' };
+    }
+
+    await connectTodb();
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true }).select('-password');
+
+    if (!updatedUser) {
+      return { message: 'User not found.', errors: {} };
+    }
+
+    revalidatePath('/seller');
+
+    return { message: 'Profile updated successfully.', errors: {} };
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      return { message: 'Authorization failed: Invalid or expired token.', errors: {} };
+    }
+    console.error('Database Error:', error);
+    return { message: 'Failed to update profile.', errors: {} };
+  }
 }
+
 
 
 export async function deleteUser(id: string | Types.ObjectId): Promise<IUser | null> {

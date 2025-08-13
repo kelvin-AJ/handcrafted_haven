@@ -2,8 +2,9 @@ import styles from "../../page.module.css";
 import Image from "next/image";
 import { IoStar } from "react-icons/io5";
 import ArtisanReview from "./artisan-review"; 
-import { getFeedbacksforSeller, getLoggedInUser, loginUser} from "@/app/lib/actions";
+import { getFeedbacksforSeller, getLoggedInUser} from "@/app/lib/actions";
 import { RiEditFill } from "react-icons/ri";
+import Link from 'next/link'
 
 export default async function SellerInfo() {
   const feedbacks = await getFeedbacksforSeller();
@@ -22,9 +23,9 @@ export default async function SellerInfo() {
       {/* Container for the heading and the new Edit button */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>Your Profile</h1>
-        <button className={styles.editProfileButton}>
+        <Link href="/seller/edit" className={styles.editProfileButton}>
           <RiEditFill />
-          Edit Profile</button>
+          Edit Profile</Link>
       </div>
 
       <div className={styles.myProfileGrid}>

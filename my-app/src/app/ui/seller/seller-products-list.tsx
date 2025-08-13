@@ -6,7 +6,6 @@ import { getProductsBySeller } from "../../lib/actions";
 
 export default async function SellerProductsList() {
     const sellerProducts = await getProductsBySeller();
-    console.log(sellerProducts)
 
      return (
     <div className={styles.sellerProductsList}>

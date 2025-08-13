@@ -27,3 +27,14 @@ export type LoginState = {
     };
   
   }
+
+export type EditFormState = {
+    message?: string;
+    errors?: {
+      name?: string;
+      email?: string;
+      role?: string;
+      bio?: string;
+      title?: string;
+    }
+}
