@@ -5,7 +5,7 @@ import ArtisanReview from "../artisan-review";
 import { getFeedbacksforSeller} from "@/app/lib/actions";
 import Link from 'next/link'
 
-export default async function UserInfo({userId, name, rating, profileImage, role, joinedDate, title, bio} : {userId : string, name : string, rating : number, profileImage : string, role : string, joinedDate : Date, title : string, bio : string}) {
+export default async function UserInfo({userId, name, rating, joinedDate, title, bio} : {userId : string, name : string, rating : number, joinedDate : Date, title : string, bio : string}) {
   const feedbacks = await getFeedbacksforSeller(userId);
   const dateJoined: string = joinedDate
     ? new Date(joinedDate).toLocaleDateString('en-US', {

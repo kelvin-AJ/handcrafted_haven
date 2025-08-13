@@ -12,8 +12,6 @@ export default function UserGrid({ user } : { user: IUser | null}) {
         name={user?.name || ''}
         title={user?.title || ''}
         rating={user?.rating || 0}
-        profileImage={user?.profileImage || ''}
-        role={user?.role || 'user'}
         bio={user?.bio || ''}
         joinedDate={user?.dateJoined || new Date()}
  />
