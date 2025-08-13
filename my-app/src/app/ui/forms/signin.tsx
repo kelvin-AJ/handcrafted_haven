@@ -12,14 +12,15 @@ import { Label } from "@/components/ui/label";
 import styles from "./form.module.css";
 import { useActionState, useEffect } from "react";
 import { loginUser } from "@/app/lib/actions";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import { LoginState } from "@/app/lib/definitions";
 
 export default function LoginForm() {
-  
+
+
   const initialState: LoginState = {
     message: "",
-    secret: undefined,
+    success: false, 
     errors: {
       email: "",
       password: ""
@@ -31,12 +32,11 @@ export default function LoginForm() {
 
 
   useEffect(() => {
-    if (state?.secret && router) {
-      sessionStorage.setItem('authToken', state?.secret);
-
-      router.push('/products');
+    console.log(state)
+    if (state.success) {
+      router.push('/seller');
     }
-  }, [state?.secret, router]);
+  }, [state.success, router]);
 
 
   return (
@@ -82,7 +82,7 @@ export default function LoginForm() {
               )}
             </div>
 
-            {state.message && (
+            {state.message && !state.success && (
                 <p style={{ color: 'red' }}>{state.message}</p>
             )}
 

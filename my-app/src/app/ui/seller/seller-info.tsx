@@ -2,42 +2,55 @@ import styles from "../../page.module.css";
 import Image from "next/image";
 import { IoStar } from "react-icons/io5";
 import ArtisanReview from "./artisan-review"; 
-import { getFeedbacksforSeller} from "@/app/lib/actions";
+import { getFeedbacksforSeller, getLoggedInUser, loginUser} from "@/app/lib/actions";
+import { RiEditFill } from "react-icons/ri";
 
-export default async function SellerInfo({sellerId} : {sellerId: string}) {
-  const feedbacks = await getFeedbacksforSeller(sellerId);
-  console.log(feedbacks)
+export default async function SellerInfo() {
+  const feedbacks = await getFeedbacksforSeller();
+  const loggedinUser = await getLoggedInUser();
 
-
+  const dateJoined: string = loggedinUser?.dateJoined
+    ? new Date(loggedinUser.dateJoined).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : "Unknown";
   
   return (
     <div>
-      <h1>Your Profile</h1>
+      {/* Container for the heading and the new Edit button */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1>Your Profile</h1>
+        <button className={styles.editProfileButton}>
+          <RiEditFill />
+          Edit Profile</button>
+      </div>
+
       <div className={styles.myProfileGrid}>
         <div className={styles.profileMainGrid}>
           <div className={styles.profileCard}>
             <div>
-    <Image
-              className={styles.profileImage}
-              src="/images/profile-img.jpg"
-              alt="Portrait of Seller"
-              height={200}
-              width={200}
-            />
+              <Image
+                className={styles.profileImage}
+                src="/images/profile-img.jpg"
+                alt="Portrait of Seller"
+                height={200}
+                width={200}
+              />
             </div>
             <div>
-    <h3>Nephi Asha</h3>
-            <p className={styles.profileTitle}>Pottery Expert</p>
-            <p>Joined <span>Jan 5, 2025</span></p>
-            <p className={styles.ratingStar}><IoStar /> 4.8 (Overall)</p>
+              <h3>{loggedinUser?.name}</h3>
+              <p className={styles.profileTitle}>{loggedinUser?.title}</p>
+              <p>Joined <span>{dateJoined}</span></p>
+              <p className={styles.ratingStar}><IoStar /> {loggedinUser?.rating} (Overall)</p>
             </div>
-            
           </div>
 
           <div>
             <h3>About Me</h3>
             <p>
-              Hello! I am Nephi, a passionate potter with over 15 years of experience shaping clay into beautiful and functional art. My journey began in a small community studio, where I fell in love with the wheel.
+              {loggedinUser?.bio}
             </p>
           </div>
         </div>
@@ -47,7 +60,7 @@ export default async function SellerInfo({sellerId} : {sellerId: string}) {
             {feedbacks.map((review, index) => (
               <ArtisanReview
                 key={index * 1000}
-                author={review.author.name}
+                author={typeof review.author === "object" && "name" in review.author ? review.author.name : "Unknown"}
                 rating={review.rating}
                 comment={review.comment}
                 date={review.date}

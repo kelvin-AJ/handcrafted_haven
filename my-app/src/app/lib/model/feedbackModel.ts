@@ -1,6 +1,5 @@
 import { Schema, model, models, Types } from 'mongoose'
 import {IUser} from "./userModel"
-import { required } from 'zod/mini'
 
 export interface IFeedback {
   comment: string

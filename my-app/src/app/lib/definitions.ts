@@ -10,7 +10,7 @@ export type State = {
 
 export type LoginState = {
     message?: string;
-    secret?: string;
+    success: boolean;
     errors?: {
       email?: string;
       password?: string;

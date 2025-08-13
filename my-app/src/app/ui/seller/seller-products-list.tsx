@@ -4,9 +4,9 @@ import ProductSample from "../product-sample";
 import { RiApps2AddFill } from "react-icons/ri";
 import { getProductsBySeller } from "../../lib/actions";
 
-export default async function SellerProductsList({ sellerId } : {sellerId: string}) {
-    const sellerProducts = await getProductsBySeller(sellerId);
-    // console.log(sellerPoducts)
+export default async function SellerProductsList() {
+    const sellerProducts = await getProductsBySeller();
+    console.log(sellerProducts)
 
      return (
     <div className={styles.sellerProductsList}>
@@ -25,11 +25,11 @@ export default async function SellerProductsList({ sellerId } : {sellerId: strin
             {/* Products listing */}
 
             {
-            sellerProducts.map((product, i) => {
+            sellerProducts.map((product) => {
                 return (
                   <ProductSample
                     key={product._id.toString()}
-                    itemDescription={product.description}
+                    itemDescription="Sample Description"
                     itemName={product.title}
                     itemPrice={product.price}
                     imgSrc={product.imageURL}

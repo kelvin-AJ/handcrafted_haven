@@ -10,6 +10,49 @@ import { State, LoginState, SignupState } from '../lib/definitions';
 import { ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+
+
+
+interface UserPayload  extends jwt.JwtPayload{
+  userId: string;
+  email: string;
+  role: 'user' | 'seller';
+}
+
+
+// Authentication
+async function authenticateUser() : Promise<UserPayload> {
+   const cookieStore = cookies();
+   const token = (await cookieStore).get('authToken')?.value;
+
+
+   if(!token) {
+    console.log("No token found");
+    redirect("/signin")
+    return {} as UserPayload;
+   }
+
+   const secret = process.env.JWT_SECRET;
+
+   if(!secret) {
+    console.log("JWT Secret not set");
+    throw new Error ("Server Configuration Error");
+   }
+
+   try {
+    const decoded = jwt.verify(token, secret) as UserPayload;
+
+    return decoded;
+   }catch(error) {
+    console.log("invalid token :" + error);
+    return {} as UserPayload
+   }
+}
+
+
+
 
 // PRODUCTS
 
@@ -47,13 +90,22 @@ export async function createProduct(prevState: State, formData: FormData): Promi
 
   try {
     await connectTodb();
-    await Product.create({
+    const auth = await authenticateUser();
+    const sellerId = new ObjectId(auth.userId);
+    const product :  IProduct = {
+      _id: new Types.ObjectId(),
       title,
       price: parseFloat(price),
       description,
       imageURL,
-      seller: new ObjectId(), // Placeholder until auth is implemented
-    });
+      seller: sellerId,
+    }
+
+
+    const response = await Product.create(product);
+    console.log(response);
+
+    console.log("response")
   } catch (error) {
     return { message: 'Database Error: Failed to Create Product.' };
   }
@@ -87,10 +139,15 @@ export async function getProducts(filter = {}): Promise<IProduct[]> {
 }
 
 // Get Seller's product
-export async function getProductsBySeller(sellerId: string | Types.ObjectId): Promise<IProduct[]> {
+export async function getProductsBySeller(): Promise<IProduct[]> {
   try {
     await connectTodb();
+    const authentication : UserPayload = await authenticateUser();
+
+    const sellerId = new ObjectId(authentication.userId);
+
     const products = await Product.find({ seller: sellerId }).populate('seller');
+
     return products.map(p => p.toObject());
   } catch (error) {
     console.error('Database Error:', error);
@@ -134,7 +191,7 @@ export async function deleteProduct(id: string | Types.ObjectId): Promise<IProdu
 export async function getAllUsers(): Promise<IUser[]> {
   try {
     await connectTodb();
-    const users = await User.find();
+    const users = await User.find().select('-password');
     return users.map(u => u.toObject());
   } catch (error) {
     console.error('Database Error:', error);
@@ -204,7 +261,7 @@ export async function createUser(prevState: SignupState, formData: FormData): Pr
     console.error('Database Error:', error);
     return {
       message: 'An unexpected error occurred. Failed to create user.',
-      errors: {} // Ensure this return also matches the state type
+      errors: {} 
     };
   }
 }
@@ -220,41 +277,67 @@ export async function loginUser(prevState: LoginState, formData: FormData): Prom
     if (!user) {
       return {
         message: 'User not found.',
-        errors: {
-          email: 'User not found.',
-        }
+        success: false,
+        errors: { email: 'User not found.' },
       };
     }
+
     const passwordsMatch = await bcrypt.compare(password, user.password);
 
     if (passwordsMatch) {
       const secret = process.env.JWT_SECRET;
       if (!secret) {
         console.error('JWT_SECRET is not set.');
-        return { message: 'Server configuration error.' };
+        return { message: 'Server configuration error.', success: false, errors: {} };
       }
-      const token = jwt.sign({
-        userId: user._id,
-        email: user.email,
-        role: user.role
-      }, secret, { expiresIn: '5h' })
+      const token = jwt.sign(
+        {
+          userId: user._id.toString(), // Ensure userId is a string
+          email: user.email,
+          role: user.role,
+        },
+        secret,
+        { expiresIn: '5h' }
+      );
 
-      return {
-        message : "Login Successful",
-        secret: token
-      }
+      (await cookies()).set('authToken', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', 
+        maxAge: 60 * 60 * 5, 
+        path: '/', 
+      });
+
+      // No need to return the token in the response body anymore
+      return { message: 'Login Successful', success : true, errors: {} };
     } else {
-      return { message: 'Incorrect password.', errors: { password: 'Incorrect password.' } };
+      return { message: 'Incorrect password.', success : false,  errors: { password: 'Incorrect password.' } };
     }
   } catch (error) {
     console.error('Database Error:', error);
     return {
       message: 'An unexpected error occurred. Please try again.',
-      secret: undefined,
-      errors: {}
+      success: false,
+      errors: {},
     };
   }
+};
+
+export async function getLoggedInUser() : Promise<IUser | null> {
+  await connectTodb();
+  const auth = await authenticateUser();
+
+  try {
+    const response = User.findById(auth.userId).select('-password')
+
+    return response;
+    
+  } catch(error) {
+    console.log(error);
+    return {} as IUser
+  }
+
 }
+
 
 export async function deleteUser(id: string | Types.ObjectId): Promise<IUser | null> {
   try {
@@ -282,9 +365,13 @@ export async function createFeedback(feedback: IFeedback): Promise<IFeedback> {
   }
 }
 
-export async function getFeedbacksforSeller(sellerId: string | Types.ObjectId): Promise<IFeedback[]> {
+export async function getFeedbacksforSeller(): Promise<IFeedback[]> {
   try {
     await connectTodb();
+    const auth = await authenticateUser();
+    const sellerId = new ObjectId(auth.userId);
+
+
     const feedbacks = await Feedback.find({ seller: new ObjectId(sellerId) }).populate("author")
     return feedbacks.map(f => f.toObject());
   } catch (error) {

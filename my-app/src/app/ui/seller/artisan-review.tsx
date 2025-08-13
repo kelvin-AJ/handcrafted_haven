@@ -2,7 +2,7 @@ import styles from "../../page.module.css";
 import { IoStar } from "react-icons/io5";
 
 type ArtisanReviewProps = {
-    author: string;
+  author: string;
   rating: number;
   comment: string;
   date: Date;

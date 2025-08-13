@@ -58,7 +58,7 @@ export default function Form() {
   <div className={styles.group}>
     <label htmlFor="imageURL">Product Image</label>
     <input 
-      type="url" 
+      type="text" 
       id="imageURL" 
       name="imageURL" 
     />

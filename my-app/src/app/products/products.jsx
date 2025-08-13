@@ -17,7 +17,7 @@ export default async function Products() {
       <div className={styles.productImage}>
         {allProducts.map((product, i) => (
           <ProductSample
-            key={i * Date.now()}
+            key={product._id.toString()}
             itemName={product.title}
             itemDescription={product.description}
             itemPrice={product.price}
