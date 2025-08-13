@@ -35,9 +35,9 @@ export async function POST(req: Request) {
       { status: 201 }
     );
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { success: false, message: "Server error: " + err.message },
+      { success: false, message: "Server error: " + err },
       { status: 500 }
     );
   }
