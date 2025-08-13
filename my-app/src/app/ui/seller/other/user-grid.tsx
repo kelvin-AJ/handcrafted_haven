@@ -8,7 +8,7 @@ export default function UserGrid({ user } : { user: IUser | null}) {
   return (
     <div className={styles.page}>
       <UserInfo
-        userId={user?._id?.toString() || ''}
+        userId={user ? (user)._id?.toString() : ''}
         name={user?.name || ''}
         title={user?.title || ''}
         rating={user?.rating || 0}
@@ -16,8 +16,8 @@ export default function UserGrid({ user } : { user: IUser | null}) {
         role={user?.role || 'user'}
         bio={user?.bio || ''}
         joinedDate={user?.dateJoined || new Date()}
-      />
-      <UserProductsList userId={user?._id?.toString() || ''}/>
+ />
+      <UserProductsList userId={user ? user._id?.toString() : ''}/>
     </div>
   );
 }

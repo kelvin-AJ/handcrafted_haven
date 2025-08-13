@@ -40,23 +40,27 @@ export default function Home() {
 
           <h2 className={styles.subh}>Own One-of-a-Kind, Handcrafted Masterpieces</h2>
             <ProductSample 
+              itemDescription=""
               itemName={"Native Woven Basket"}
-              itemPrice={"$200"}
+              itemPrice={200}
               imgSrc="/images/img.jpg"
               />
             <ProductSample 
+            itemDescription=""
               itemName={"Vintage Game Board"}
-              itemPrice={"$20"}
+              itemPrice={20}
               imgSrc="/images/img1.jpg"
               />
             <ProductSample 
+            itemDescription=""
               itemName={"Wall  Flowers"}
-              itemPrice={"$10"}
+              itemPrice={10}
               imgSrc="/images/img2.jpg"
               />
             <ProductSample 
+            itemDescription=""
               itemName={"Fine China Dishes"}
-              itemPrice={"$520"}
+              itemPrice={520}
               imgSrc="/images/img3.jpg"
               />
           </div>

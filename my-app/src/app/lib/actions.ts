@@ -102,7 +102,7 @@ export async function createProduct(prevState: State, formData: FormData): Promi
     }
 
 
-    const response = await Product.create(product);
+    await Product.create(product);
 
   } catch (error) {
     return { message: 'Database Error: Failed to Create Product.' };
@@ -222,6 +222,7 @@ export async function createUser(prevState: SignupState, formData: FormData): Pr
   const passwordHash = await bcrypt.hash(password, 10);
 
   const newUser: IUser = {
+    _id: new Types.ObjectId(),
     name: formData.get('name') as string,
     email: formData.get('email') as string,
     password: passwordHash,
@@ -347,15 +348,11 @@ export async function getLoggedInUser(): Promise<IUser | null> {
 
   try {
     const user = await User.findById(auth.userId)
-      .select('-password')
-      .lean();
+      .select('-password');
 
     if (!user) return null;
 
-    return {
-      ...user,
-      _id: user._id.toString(), 
-    } as IUser;
+    return user.toObject() as IUser;
 
   } catch (error) {
     console.error(error);
@@ -463,7 +460,7 @@ export async function createFeedback(prevState: ReviewState, formData: FormData)
       date: new Date()
     }
 
-    const newFeedback = await Feedback.create(feedback);
+    await Feedback.create(feedback);
 
     return { message: "Feedback created successfully" };
 
@@ -473,11 +470,11 @@ export async function createFeedback(prevState: ReviewState, formData: FormData)
   }
 }
 
-export async function getFeedbacksforSeller(userId=null): Promise<IFeedback[]> {
+export async function getFeedbacksforSeller(userId="" ): Promise<IFeedback[]> {
   try {
     await connectTodb();
     const auth = await authenticateUser();
-    const sellerId = userId ? userId : new ObjectId(auth.userId);
+    const sellerId = userId != "" ? userId : new ObjectId(auth.userId);
 
 
     const feedbacks = await Feedback.find({ seller: new ObjectId(sellerId) }).populate("author")
