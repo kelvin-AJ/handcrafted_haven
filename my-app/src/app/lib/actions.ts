@@ -130,7 +130,10 @@ export async function getProductById(id: string | Types.ObjectId): Promise<IProd
 export async function getProducts(filter = {}): Promise<IProduct[]> {
   try {
     await connectTodb();
-    const products = await Product.find(filter).populate('seller');
+    const products = await Product.find(filter).populate({
+      path: 'seller',
+      select: '-password' 
+    });
     return products.map(p => p.toObject());
   } catch (error) {
     console.error('Database Error:', error);
@@ -139,14 +142,17 @@ export async function getProducts(filter = {}): Promise<IProduct[]> {
 }
 
 // Get Seller's product
-export async function getProductsBySeller(): Promise<IProduct[]> {
+export async function getProductsBySeller(id : string | null = null): Promise<IProduct[]> {
   try {
     await connectTodb();
     const authentication : UserPayload = await authenticateUser();
 
-    const sellerId = new ObjectId(authentication.userId);
+    const sellerId = id || new ObjectId(authentication.userId);
 
-    const products = await Product.find({ seller: sellerId }).populate('seller');
+    const products = await Product.find({ seller: sellerId }).populate({
+      path: 'seller',
+      select: '-password' 
+    });
 
     return products.map(p => p.toObject());
   } catch (error) {
@@ -196,6 +202,16 @@ export async function getAllUsers(): Promise<IUser[]> {
   } catch (error) {
     console.error('Database Error:', error);
     return [];
+  }
+}
+export async function getUser(id: string | Types.ObjectId): Promise<IUser | null> {
+  try {
+    await connectTodb();
+    const user = await User.findById(id).select('-password'); 
+    return user ? user.toObject() : null;
+  } catch (error) {
+    console.error('Database Error:', error);
+    return null;
   }
 }
 
