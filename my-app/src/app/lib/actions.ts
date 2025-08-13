@@ -336,6 +336,11 @@ export async function loginUser(prevState: LoginState, formData: FormData): Prom
   }
 };
 
+export async function logoutUser() {
+  (await cookies()).delete('authToken');
+  redirect('/signin');
+}
+
 export async function getLoggedInUser(): Promise<IUser | null> {
   await connectTodb();
   const auth = await authenticateUser();

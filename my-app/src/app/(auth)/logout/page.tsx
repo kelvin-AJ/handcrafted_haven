@@ -1,15 +1,8 @@
 "use client"
-import {useEffect} from "react"
-import { useRouter  } from "next/navigation"
+import { logoutUser } from "@/app/lib/actions"
+
 
 export default function logout(){
-    const router = useRouter();
-
-
-    useEffect(()=>{
-        localStorage.removeItem("loggedIn");
-        router.push("/signin");
-
-    }, [router]);
+    logoutUser()
     return <p> logging Out...</p>
 }
